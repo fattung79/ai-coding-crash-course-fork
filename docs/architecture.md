@@ -2,23 +2,17 @@
 
 ## Layering
 
-Requests flow **route → service → Drizzle**. Route modules own HTTP concerns — loaders, actions, redirects, status codes — and rendering. Services own data access and export plain synchronous functions that use the shared `db` instance directly. Services do not receive a database handle as an argument; tests substitute one by mocking the `~/db` module.
-
-Services use positional parameters rather than options objects. This is stated as a project convention in comment headers across `app/services` and `app/lib/access.server.ts`.
+Requests flow **route → service → Drizzle**. Route modules own HTTP concerns — loaders, actions, redirects, status codes — and rendering. Services own data access and export plain synchronous functions that use the shared `db` instance directly.
 
 ## Routing
 
-`app/routes.ts` is the route table. Routing is config-based, not file-based, so adding a page means creating the module in `app/routes/` **and** registering it in `app/routes.ts`. Most pages sit inside the `routes/layout.app.tsx` layout. Route modules import their generated types from `./+types/<route-file-name>`.
-
-Route files are named with dots for path segments and `$` for params, e.g. `courses.$slug.lessons.$lessonId.tsx`.
+`app/routes.ts` is the route table. Routing is config-based, not file-based, so adding a page means creating the module in `app/routes/` **and** registering it in `app/routes.ts`. Most pages sit inside the `routes/layout.app.tsx` layout.
 
 ## Database Access
 
 `app/db/index.ts` exports `db`, a Proxy wrapping a lazily-created Drizzle instance. The connection is opened on first property access rather than at module scope, which keeps the module free of side effects so Rollup can tree-shake `better-sqlite3` out of the client bundle when a route imports a service purely for its loader. Keep this file side-effect free.
 
-Read `app/db/schema.ts` for any table, column, relation, or enum — it is the single source of truth for the data model.
-
-Schema changes follow the `database-migrations` skill in `.agents/skills/`: edit the schema, `npm run db:generate`, update `scripts/seed.ts` for every table touched, then `npm run db:seed`. `data.db` is gitignored and disposable — delete it and reseed whenever it gets into a bad state.
+Schema changes follow the `database-migrations` skill.
 
 ## Authentication and Access Control
 
@@ -78,4 +72,4 @@ beforeEach(() => {
 });
 ```
 
-Moving that import above the mock makes the service capture the real database silently. Vitest runs with `globals: true` and `vite-tsconfig-paths`, so `describe`/`it`/`expect` need no import and `~/*` resolves in tests.
+Moving that import above the mock makes the service capture the real database silently.

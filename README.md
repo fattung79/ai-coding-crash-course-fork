@@ -75,13 +75,15 @@ npm run cherry-pick course-star-ratings
 
 ## Tech Stack
 
-- **Framework:** [React Router](https://reactrouter.com/) v7 with SSR
+- **Framework:** [React Router](https://reactrouter.com/) v8 with SSR
 - **Language:** TypeScript 5.9
-- **Database:** SQLite via [Drizzle ORM](https://orm.drizzle.team/)
+- **Database:** SQLite via [Drizzle ORM](https://orm.drizzle.team/) and better-sqlite3
 - **Styling:** Tailwind CSS 4 + [shadcn/ui](https://ui.shadcn.com/)
 - **Testing:** [Vitest](https://vitest.dev/)
 - **Build:** [Vite](https://vite.dev/) 7
-- **Real-time:** [Ably](https://ably.com/) for live presence
+- **Validation:** [Zod](https://zod.dev/)
+- **Markdown:** [marked](https://marked.js.org/) + [Shiki](https://shiki.style/)
+- **Editor and UI:** [Monaco](https://microsoft.github.io/monaco-editor/) for the markdown editor, [@hello-pangea/dnd](https://github.com/hello-pangea/dnd) for drag-and-drop ordering
 
 ## License
 

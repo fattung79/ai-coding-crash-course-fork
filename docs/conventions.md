@@ -1,6 +1,8 @@
 # Conventions
 
-- Service and lib modules open with a `// ─── Name ───` comment header summarising the module's responsibility; several also record the reasoning behind non-obvious decisions. Read those headers before changing a module.
-- Enums are TypeScript `enum`s exported from `app/db/schema.ts` and used at every insert site, including `scripts/seed.ts`.
+- Open new service and lib modules with a `// ─── Name ───` comment header stating the module's responsibility and the reasoning behind any non-obvious decisions.
+- Services take positional parameters, not options objects.
+- Enums are TypeScript `enum`s exported from `app/db/schema.ts`.
 - Server-only modules use the `.server.ts` suffix.
-- `data.db` is disposable and gitignored; `scripts/seed.ts` is the source of truth for starting data.
+- Typecheck with `npm run typecheck`; bare `tsc` reports missing `./+types/*` imports.
+- Format changed files with `npx prettier --write <files>`.
